@@ -1,5 +1,6 @@
 package PaoloF16.u5w3d5.entities;
 
+import PaoloF16.u5w3d5.enums.Role;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AccessLevel;

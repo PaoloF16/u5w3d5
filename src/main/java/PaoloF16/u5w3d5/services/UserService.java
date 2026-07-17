@@ -3,6 +3,7 @@ package PaoloF16.u5w3d5.services;
 import PaoloF16.u5w3d5.entities.User;
 import PaoloF16.u5w3d5.exceptions.BadRequestException;
 import PaoloF16.u5w3d5.exceptions.NotFoundException;
+import PaoloF16.u5w3d5.payloads.UserRegistrationDTO;
 import PaoloF16.u5w3d5.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;

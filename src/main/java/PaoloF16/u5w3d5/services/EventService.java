@@ -3,6 +3,8 @@ package PaoloF16.u5w3d5.services;
 import PaoloF16.u5w3d5.entities.Event;
 import PaoloF16.u5w3d5.entities.User;
 import PaoloF16.u5w3d5.exceptions.BadRequestException;
+import PaoloF16.u5w3d5.exceptions.NotFoundException;
+import PaoloF16.u5w3d5.payloads.EventDTO;
 import PaoloF16.u5w3d5.repositories.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
