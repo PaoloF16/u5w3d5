@@ -2,6 +2,8 @@ package PaoloF16.u5w3d5.services;
 
 import PaoloF16.u5w3d5.entities.User;
 import PaoloF16.u5w3d5.exceptions.UnauthorizedException;
+import PaoloF16.u5w3d5.payloads.LoginRequestDTO;
+import PaoloF16.u5w3d5.tools.JWTTools;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
