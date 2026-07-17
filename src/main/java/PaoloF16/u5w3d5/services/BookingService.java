@@ -5,7 +5,9 @@ import PaoloF16.u5w3d5.entities.Booking;
 import PaoloF16.u5w3d5.entities.Event;
 import PaoloF16.u5w3d5.entities.User;
 import PaoloF16.u5w3d5.exceptions.BadRequestException;
+import PaoloF16.u5w3d5.exceptions.NotFoundException;
 import PaoloF16.u5w3d5.repositories.BookingRepository;
+import PaoloF16.u5w3d5.repositories.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +23,9 @@ public class BookingService {
 
     @Autowired
     private EventService eventService;
+
+    @Autowired
+    private EventRepository eventRepository;
 
     @Autowired
     private UserService userService;
@@ -53,5 +58,21 @@ public class BookingService {
     public List<Booking> getBookingsByUser(Long userId) {
         User user = userService.findById(userId);
         return bookingRepository.findByUser(user);
+    }
+
+    public void cancelBooking(Long bookingId, Long userId) {
+        Booking booking = bookingRepository.findById(bookingId)
+                .orElseThrow(() -> new NotFoundException("Booking not found with id: " + bookingId));
+
+        if (!booking.getUser().getId().equals(userId)) {
+            throw new BadRequestException("You can only cancel your own bookings");
+        }
+
+
+        Event event = booking.getEvent();
+        event.setAvailableSeats(event.getAvailableSeats() + 1);
+        eventRepository.save(event);
+
+        bookingRepository.delete(booking);
     }
 }

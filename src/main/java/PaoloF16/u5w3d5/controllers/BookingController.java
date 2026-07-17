@@ -28,5 +28,9 @@ public class BookingController {
         return bookingService.getBookingsByUser(currentUser.getId());
     }
 
-
+    @DeleteMapping("/{bookingId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void cancelBooking(@PathVariable Long bookingId, @AuthenticationPrincipal User currentUser) {
+        bookingService.cancelBooking(bookingId, currentUser.getId());
+    }
 }
