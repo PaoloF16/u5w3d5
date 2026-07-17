@@ -17,7 +17,7 @@ public class JWTTools {
     @Value("${jwt.secret}")
     private String secret;
 
-    // 1. Centralizamos la generación de la clave para no repetir código y evitar problemas de rendimiento
+
     private SecretKey getSigningKey() {
         return Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
     }
@@ -25,15 +25,15 @@ public class JWTTools {
     public String createToken(User user) {
         return Jwts.builder()
                 .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis() + 1000L * 60 * 60 * 24 * 7)) // Agregada 'L' para evitar desbordamiento de enteros (Integer Overflow)
+                .expiration(new Date(System.currentTimeMillis() + 1000L * 60 * 60 * 24 * 7))
                 .subject(String.valueOf(user.getId()))
-                .signWith(getSigningKey()) // Usamos la clave centralizada
+                .signWith(getSigningKey())
                 .compact();
     }
 
     public void verifyToken(String accessToken) {
         try {
-            // 2. Corregido: Usar parseSignedClaims para validar firmas, no solo parse
+
             Jwts.parser()
                     .verifyWith(getSigningKey())
                     .build()

@@ -18,16 +18,16 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
-        //disabilito il form di login
+
         httpSecurity.formLogin(formLogin -> formLogin.disable());
-        //disabilito la protezione da CSRF
+
         httpSecurity.csrf(csrf -> csrf.disable());
-        //disabilito le sessioni
+
         httpSecurity.sessionManagement(sessions ->
                 sessions.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
 
-//tolgo la protezione a tutto. gli endpoint protetti saranno custom
+
         httpSecurity.authorizeHttpRequests(h ->
                 h.requestMatchers("/**").permitAll());
 

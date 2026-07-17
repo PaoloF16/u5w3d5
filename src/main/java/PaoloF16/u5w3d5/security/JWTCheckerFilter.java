@@ -32,7 +32,7 @@ public class JWTCheckerFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
 
-        String authHeader = request.getHeader("Authorization"); // "Bearer k1lm2m34lkmxc0898u213lk21nm390.213489us09c.123u91283"
+        String authHeader = request.getHeader("Authorization");
         if (authHeader == null || !authHeader.startsWith("Bearer "))
             throw new UnauthorizedException("Please enter the token in the Authorization Header in the correct format!");
 
@@ -52,7 +52,7 @@ public class JWTCheckerFilter extends OncePerRequestFilter {
 
     }
 
-    // Disabilitiamo questo filtro per determinati endpoints tipo /auth/login e /auth/register
+
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
         return new AntPathMatcher().match("/auth/**", request.getServletPath());
