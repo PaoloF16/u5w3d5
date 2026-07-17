@@ -23,7 +23,7 @@ public class EventController {
     @Autowired
     private EventService eventService;
 
-    //tutti i loggati
+
     @GetMapping
     public List<Event> getAllEvents() {
         return eventService.getAllEvents();
@@ -35,13 +35,12 @@ public class EventController {
     }
 
 
-    //solo organizer
+
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("hasAuthority('ORGANIZER')")
-    public Event createEvent(@RequestBody @Validated EventDTO dto,
-                             BindingResult validationResult, @AuthenticationPrincipal User currentUser) {
+    public Event createEvent(@RequestBody @Validated EventDTO dto, BindingResult validationResult, @AuthenticationPrincipal User currentUser) {
         if (validationResult.hasErrors()) {
             throw new ValidationException(validationResult.getFieldErrors()
                     .stream().map(field -> field.getDefaultMessage()).toList());
@@ -51,8 +50,7 @@ public class EventController {
 
     @PutMapping("/{eventId}")
     @PreAuthorize("hasAuthority('ORGANIZER')")
-    public Event updateEvent(@PathVariable Long eventId, @RequestBody @Validated EventDTO dto,
-                             BindingResult validationResult, @AuthenticationPrincipal User currentUser) {
+    public Event updateEvent(@PathVariable Long eventId, @RequestBody @Validated EventDTO dto, BindingResult validationResult, @AuthenticationPrincipal User currentUser) {
         if (validationResult.hasErrors()) {
             throw new ValidationException(validationResult.getFieldErrors()
                     .stream().map(field -> field.getDefaultMessage()).toList());
@@ -60,4 +58,10 @@ public class EventController {
         return eventService.updateEvent(eventId, dto, currentUser.getUsername());
     }
 
+    @DeleteMapping("/{eventId}")
+    @PreAuthorize("hasAuthority('ORGANIZER')")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteEvent(@PathVariable Long eventId, @AuthenticationPrincipal User currentUser) {
+        eventService.deleteEvent(eventId, currentUser.getUsername());
+    }
 }

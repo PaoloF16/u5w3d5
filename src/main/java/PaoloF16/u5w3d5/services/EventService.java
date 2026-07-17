@@ -69,5 +69,13 @@ public class EventService {
         return eventRepository.save(event);
     }
 
+    public void deleteEvent(Long id, String username) {
+        Event existing = getEventById(id);
+        if (!existing.getCreator().getUsername().equals(username)) {
+            throw new BadRequestException("You can only delete your own events");
+        }
+        eventRepository.delete(existing);
+    }
+
 
 }
